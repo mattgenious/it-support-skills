@@ -21,6 +21,13 @@ Capacity cleanup is not hardware repair. Disk Utility First Aid is a repair acti
 not merely inspection; obtain exact authorization, backup and interruption/recovery
 plan before running it, especially on a startup volume.
 
+For space attribution, start with the implicated container and user-selected
+folders, then progressively inspect large consumers rather than hashing or walking
+the whole home directory. Report permission, cloud-placeholder and mount exclusions;
+apparent file size, allocated bytes and APFS shared extents can differ. Candidate
+duplicate analysis belongs to [duplicate review](../review-duplicate-files/SKILL.md),
+not this capacity assessment.
+
 Prefer supported storage management and owner-selected relocation/removal over
 blind deletion. Snapshots, local Time Machine data, caches and application support
 can retain rollback, backups, licensing or state; purgeable space is OS-managed.

@@ -1,15 +1,20 @@
 """Check canonical placement, exact generated discovery and marketplace targets."""
 import json,re
 from pathlib import Path
-from package_skills import ROOT,sources,rendered
+from package_skills import ROOT,sources,rendered,packaged_files
 owners=sources();assert owners, 'No canonical skills found'
 out=ROOT/'plugins/it-support/skills'
 os_names={'windows','linux','macos'}
 routers={name:p for name,p in owners.items() if len(p.relative_to(ROOT/'skills').parts)==2}
 assert {p.parent.name for p in routers.values()}==os_names, 'Each OS needs exactly one router'
 assert set(routers)=={'route-'+os+'-support' for os in os_names}, 'Unexpected router name'
-assert {p.relative_to(out).as_posix() for p in out.rglob('*') if p.is_file()}=={name+'/SKILL.md' for name in owners}, 'Generated discovery differs from canonical owners'
+expected=packaged_files(owners)
+assert {p.relative_to(out).as_posix():p.read_bytes() for p in out.rglob('*') if p.is_file()}==expected, 'Generated discovery/assets differ from canonical owners'
 readme=(ROOT/'README.md').read_text(encoding='utf-8')
+for p in [ROOT/'README.md',*out.rglob('*.md'),*(ROOT/'skills').rglob('*.md')]:
+ for dest in re.findall(r'\[[^]]+\]\(([^)]+)\)',p.read_text(encoding='utf-8')):
+  if '://' not in dest and not dest.startswith('#'):
+   assert (p.parent/dest.split('#')[0]).is_file(), 'Missing packaged/source reference: '+str(p)+' -> '+dest
 for name,p in owners.items():
  text=p.read_text(encoding='utf-8');assert text.startswith('---\n')
  assert re.search(r'^description: .+',text,re.M)

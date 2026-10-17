@@ -13,6 +13,9 @@ Select a task from its observed symptom, not a generic area label.
 - Workload contention: [performance/identify-resource-bottleneck](./performance/identify-resource-bottleneck/SKILL.md).
 - Protection or policy assessment: [security/assess-security-posture](./security/assess-security-posture/SKILL.md).
 - Application/service/peripheral failure: [reliability/investigate-application-device-failure](./reliability/investigate-application-device-failure/SKILL.md).
+- DNS/proxy/TLS or connectivity failure: [network path](../shared/diagnose-network-path/SKILL.md).
+- Recover files or test a backup: [backup restore](../shared/verify-backup-restore/SKILL.md).
+- Printer or stuck Windows queue: [print failure](./printing/diagnose-print-failure/SKILL.md).
 - Unclear symptom: [evidence-led-triage](../shared/evidence-led-triage/SKILL.md).
 - Uncertain prior operation: [recover-uncertain-operation](../shared/recover-uncertain-operation/SKILL.md).
 - Proposed repair: [verify-reversible-repair](../shared/verify-reversible-repair/SKILL.md).

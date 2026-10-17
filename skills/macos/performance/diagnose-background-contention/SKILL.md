@@ -14,7 +14,13 @@ Use Activity Monitor CPU/Energy/Disk/Network and Login Items & Extensions first.
 Correlate Spotlight, Photos analysis, iCloud, Time Machine and updates with the
 symptom window. Inspect implicated launch agents/daemons, menu-bar utilities,
 browser extensions and endpoint tools; identify publisher/owner and purpose rather
-than treating all persistence as unwanted. For unresolved latency, bounded sample,
+than treating all persistence as unwanted. Login items, per-user launch agents,
+system agents/daemons and management profiles have different owners and lifecycles;
+System Settings is not an exhaustive launchd inventory. Inspect only implicated
+labels/configuration with installed-version-supported tools; do not recursively
+remove plists or treat legacy startup recipes as modern API guarantees. Confirm
+backup, sync, accessibility and security dependencies before changing one item.
+For unresolved latency, bounded sample,
 Console predicates, fs_usage/nettop or Instruments/xctrace may discriminate cause;
 record tool availability, elevated access, overhead and sensitive path/process data.
 Do not leave tracing or verbose log streaming running after the check.
@@ -47,3 +53,4 @@ separately. Physical hardware claims need physical Mac evidence.
 - [Performance and metrics](https://developer.apple.com/documentation/xcode/performance-and-metrics)
 - [Unified logging](https://developer.apple.com/documentation/os/logging)
 - [Apple Platform Security](https://support.apple.com/guide/security/welcome/web)
+- [Pinned startup adaptation and license](SOURCE.md)
