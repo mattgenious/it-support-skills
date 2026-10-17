@@ -1,0 +1,20 @@
+{
+  "name": "it-support-skills",
+  "interface": {
+    "displayName": "IT Support Skills"
+  },
+  "plugins": [
+    {
+      "name": "it-support",
+      "source": {
+        "source": "local",
+        "path": "./plugins/it-support"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

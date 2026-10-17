@@ -1,0 +1,11 @@
+{
+  "name": "it-support",
+  "version": "0.1.0",
+  "description": "Evidence-led, recoverable IT support skills for Windows, Linux and macOS.",
+  "author": {
+    "name": "mattgenious"
+  },
+  "repository": "https://github.com/mattgenious/it-support-skills",
+  "license": "MIT",
+  "skills": "./skills/"
+}

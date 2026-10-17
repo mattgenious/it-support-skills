@@ -1,0 +1,13 @@
+{
+  "name": "it-support-skills",
+  "owner": {
+    "name": "mattgenious"
+  },
+  "plugins": [
+    {
+      "name": "it-support",
+      "source": "./plugins/it-support",
+      "description": "Evidence-led, recoverable IT support skills for Windows, Linux and macOS."
+    }
+  ]
+}
