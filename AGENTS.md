@@ -1,12 +1,17 @@
 # Library ownership
 
-This repository owns vendor-neutral IT support skills and harness packaging.
-Keep each installable skill as skills/<name>/SKILL.md inside its plugin;
-client discovery may require flat directories. Organize the human index by OS
-and task. Each capability has one source owner, not a copy per harness.
+Canonical skills live in skills/<os>/<area>/<task>/SKILL.md. Cross-platform task
+owners live in skills/shared/<task>/SKILL.md. OS SKILL.md files route only; an area
+such as performance is not a skill. Each task has a concrete trigger and result.
+Optional references, scripts and behavioral tests belong beside their task owner.
+Do not create empty areas or invent capability merely to fill the tree.
 
-Write original guidance. Add no customer information, infrastructure identifiers,
-credentials or private-product integrations. Cite sources for version-sensitive
-claims and distinguish a reported workaround from a locally verified repair.
-A skill supplies judgment, not permission to change a machine.
-Run python scripts/validate.py after changing skills or packaging.
+plugins/it-support/skills is generated flat discovery output for harnesses. Edit
+canonical owners, run python scripts/package_skills.py then scripts/validate.py.
+Route across OS boundaries through relative links, never separately maintained
+copies. Preserve public URLs only where needed; renamed initial skill paths are
+listed in the root README migration table.
+
+Write original vendor-neutral guidance; publish no customer data, credentials or
+private infrastructure. Distinguish source-backed hypotheses from verified fixes.
+A skill supplies judgment, not authority to change a machine.
