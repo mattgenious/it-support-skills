@@ -5,12 +5,12 @@ ROOT=Path(__file__).resolve().parents[1]
 def sources():
  result={}
  for p in sorted((ROOT/'skills').rglob('SKILL.md')):
-  name=re.search(r'^name: ([a-z0-9-]+)$',p.read_text(),re.M).group(1)
+  name=re.search(r'^name: ([a-z0-9-]+)$',p.read_text(encoding='utf-8'),re.M).group(1)
   if name in result: raise ValueError('Duplicate skill name: '+name)
   result[name]=p
  return result
 def rendered(p,owners):
- text=p.read_text()
+ text=p.read_text(encoding='utf-8')
  def link(m):
   dest=(p.parent/m.group(2)).resolve()
   for name,owner in owners.items():
@@ -22,6 +22,6 @@ def generate():
  if out.exists():shutil.rmtree(out)
  for name,p in owners.items():
   target=out/name/'SKILL.md';target.parent.mkdir(parents=True)
-  target.write_text(rendered(p,owners),encoding='utf-8')
+  target.write_text(rendered(p,owners),encoding='utf-8',newline='\n')
  print('Generated',len(owners),'flat harness skills.')
 if __name__=='__main__':generate()
