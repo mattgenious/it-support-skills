@@ -31,6 +31,17 @@ Windows servicing. An independently tested diskless KVM failure plus missing SVM
 and elevated HCS 0x8007000D matches that signature; it does not prove every affected
 update identity or establish a universal fix. Recheck current vendor status.
 
+Verified diagnostic boundary: an empty, diskless QEMU/KVM probe failed while
+firmware virtualization and the Windows hypervisor were active; elevated HCS
+Basic succeeded but ProcessorCapabilities returned 0x8007000D. WSL-only restart,
+explicit nestedVirtualization=true and an authorized Host Compute restart did not
+restore SVM/KVM. The configuration probe was reverted, Docker restored, and the
+original guest disks were untouched. These are negative diagnostic results, not
+a verified repair. System-file verification was clean and no newer Windows Update
+was offered at the time of investigation. Do not repeat these checks as cures
+without new evidence. Different signed system-binary versions alone are not proof
+of corruption.
+
 Sources:
 - https://learn.microsoft.com/en-us/windows/wsl/wsl-config
 - https://github.com/microsoft/WSL/issues/41917
