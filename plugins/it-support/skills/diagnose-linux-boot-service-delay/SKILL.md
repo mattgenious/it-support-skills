@@ -3,38 +3,24 @@ name: diagnose-linux-boot-service-delay
 description: Diagnose slow Linux boot or systemd service readiness using dependency, journal and resource evidence before changing units.
 ---
 
-# Diagnose Linux boot or service delay
+# Diagnose Linux boot/service delay
 
-Trigger: boot, login or a named service takes too long or repeatedly stalls.
-Confirm distribution, kernel, init system, boot identity, affected readiness
-milestone and recent changes. On non-systemd hosts, use the init system's supported
-timing/status/log interface; do not pretend systemd commands cover every Linux.
+Measure the delayed user-visible readiness: kernel boot, login, network, mount
+or application availability. Record distro/init system, boot identity and clock;
+systemd tools do not apply to every Linux target.
 
-For systemd, compare systemd-analyze time, blame and critical-chain with bounded
-journalctl -b -u <unit> and unit status/dependencies. A long blame duration may be
-parallel or noncritical; dependency order and actual readiness matter. Separate
-firmware/kernel time, unit activation, failed dependency, device/network wait and
-application initialization. Inspect implicated services, timers, desktop autostart,
-package jobs, indexing/logging and monitoring by purpose and owner.
+On systemd, combine `systemd-analyze` timing, `critical-chain`, relevant unit
+dependencies and scoped boot/unit journal entries. `blame` measures activation
+duration, including parallel work; its longest row need not delay the requested
+outcome. A unit marked active may not yet serve its actual clients.
 
-For a busy service, correlate unit/cgroup CPU, memory, I/O and pressure with the
-workload; host totals may hide quotas or noisy neighbors. Route to
-[resource diagnosis](../identify-linux-resource-bottleneck/SKILL.md).
-Device/thermal errors need bounded journal/kernel evidence, not service tuning.
+Distinguish CPU/I/O contention, device/network waits, failed dependencies, retry
+timeouts and application initialization. Check the real dependent's readiness
+and package/configuration-management owner before proposing a unit edit. Missing
+journal coverage is not evidence that a stage was healthy.
 
-Prefer app readiness/configuration fixes or supported scheduling over disabling
-units. Distribution package and configuration-management ownership can overwrite
-local changes. Capture current unit/drop-in, dependencies and rollback; exact
-restart/enable/disable/timeout changes and reboot require owner authorization,
-service-impact assessment and access recovery. Preserve backup, updates, firewall,
-mandatory access controls, auditing and encryption. Use
-[reversible repair](../verify-reversible-repair/SKILL.md).
-
-Verify the original boot/service milestone under equivalent conditions, its
-dependents and a bounded post-change journal window. Command success or a reduced
-blame number alone does not prove usable service readiness.
-
-## Sources
-
-- [systemd-analyze](https://www.freedesktop.org/software/systemd/man/latest/systemd-analyze.html)
-- [systemd resource control](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
+Preserve boot, storage, networking, security and remote access. Prefer an
+owner-controlled drop-in with saved state and rollback over editing vendor units
+or disabling a slow-looking dependency. Reboot/service interruption requires
+authority and a recovery path. Verify the original readiness metric and dependent
+behavior, not only `systemctl` success.

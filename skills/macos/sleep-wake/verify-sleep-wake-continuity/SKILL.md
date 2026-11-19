@@ -3,16 +3,13 @@ name: verify-macos-sleep-wake-continuity
 description: Verify actual macOS sleep and wake continuity.
 ---
 
-# Verify actual macOS sleep and wake continuity.
+# Verify macOS sleep/wake continuity
 
-Trigger: a support session or workload must survive real system sleep/wake.
+Use an authorized real OS sleep on the affected Mac, with saved work, known wake
+method and recoverable access. A dark/frozen display or paused VM is not sleep.
+Do not change sleep/animation/reduced-motion preferences to manufacture evidence.
 
-Capture baseline boot identity, relevant executor and approval state. Use a genuine
-user-authorized sleep action; confirm OS sleep/wake events and state transitions.
-A frozen remote display or paused VM is not proof of system sleep. Inspect sleep
-preventers read-only if the requested transition did not occur.
-
-After wake, verify original task identity, usable access and local stop controls
-without replacement approval. Then verify explicit End closes access. Preserve
-power, display, login and system-motion preferences; use no settings changes to
-make acceptance pass. Report fixture blockers separately from product failures.
+Before and after wake verify the same task, session/access path and usable stop
+controls, not merely a running process. Check the affected peripheral/network
+behavior and relevant sleep/wake evidence. State guest/physical limits. Explicit
+End must close the task; report interrupted or untested continuity honestly.

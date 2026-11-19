@@ -3,41 +3,20 @@ name: evidence-led-triage
 description: Diagnose a support symptom using scoped evidence.
 ---
 
-# Diagnose a support symptom using scoped evidence.
+# Evidence-led triage
 
-Establish the authorized target, symptom, onset and desired outcome. Use the
-smallest read-only observation that distinguishes plausible causes. Separate
-application failure, OS failure, transport failure and missing evidence.
+Establish the authorized target, affected workflow, impact, onset/timezone, recent changes and what
+still works. Data-loss signs, overheating and disabled protection take priority
+over performance tuning. Preserve access, unsaved work and original evidence.
 
-Record target identity, tool/version, timestamps and collector status. A failed
-collector is not a healthy machine. Prefer native supported diagnostics over a
-new agent, background watcher or broad machine dump. Avoid reading unrelated
-files, command history, credentials or customer communications.
+Choose the smallest read-only observation that distinguishes plausible causes,
+using native diagnostics before adding a collector. Compare symptom and healthy
+intervals; utilization, an event name or temporal coincidence alone is not cause.
+Record exact errors/builds, sample windows and tool/coverage limits. An unavailable
+collector is missing evidence, not proof the subsystem failed.
+Access alone does not authorize recurring collection or unrelated/private reads.
 
-Distinguish immediate data-loss, heat, protection or resource-exhaustion risk from
-ordinary slowness before choosing the next check. Record frequency, affected
-workload and recent changes; normalize event and collection timezones. Preserve
-usable partial observations with their warnings. Access alone does not authorize
-a scheduled collector, recurring diagnostics or broader security/network reads.
-
-For Windows, use focused Get-CimInstance, Get-Process, Get-Counter, Get-Volume or
-bounded Get-WinEvent fields as the question requires; route present-device status
-and problem codes to [application/device investigation](../../windows/reliability/investigate-application-device-failure/SKILL.md).
-Use the [Windows router](../../windows/SKILL.md),
-[Mac router](../../macos/SKILL.md) or [Linux router](../../linux/SKILL.md) to
-select the symptom owner. Do not manufacture a diagnosis from one utilization
-sample, alert or time coincidence.
-
-Present decisive facts, ranked explanations with supporting/conflicting evidence,
-unknowns and one discriminating next action. Move to
-[repair](../verify-reversible-repair/SKILL.md) only within exact authorization;
-route storage risk to preservation before corrective writes. Use
-[evidence handoff](../collect-support-evidence/SKILL.md) when another
-technician needs a scoped artifact. Verify the next observation answers the
-question, and state what the sample cannot establish.
-
-## Sources
-
-- [Get-WinEvent](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent)
-- Original maintainer-owned support guidance, adapted with authorization; no
-  third-party text or private collection adapter is included.
+Report observation, interpretation and unknown separately, with the next
+discriminating check or justified action. Use [reversible repair](../verify-reversible-repair/SKILL.md)
+for a change and [evidence handoff](../collect-support-evidence/SKILL.md) for a
+diagnostic bundle. Stop once evidence supports the requested decision.

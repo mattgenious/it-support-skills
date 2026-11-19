@@ -5,41 +5,21 @@ description: Distinguish Mac APFS capacity pressure, swap or scratch contention 
 
 # Diagnose macOS storage pressure
 
-Trigger: low-space warnings, failed updates, slow scratch/swap I/O or storage-bound
-apps. Confirm disk/container/volume, symptom, backup and requested scope.
+Separate capacity, I/O contention and media/filesystem faults. Map APFS volumes to
+their shared container; volume totals, free space, purgeable space, local snapshots
+and physical capacity are not additive or equivalent.
 
-Use System Settings Storage, Disk Utility and bounded df/iostat observations.
-Distinguish APFS shared container space from per-volume figures, usable free space
-from purgeable space, snapshots/Time Machine retention from disposable files, and
-capacity from I/O contention. Correlate swap, caches, app scratch, indexing,
-sync/backup and update activity. SMART status where supported is partial evidence;
-missing status or a passing bit does not prove physical health.
+Start with native storage/disk inventory, scoped `df`/`diskutil` observations and
+the affected workload. Attribute space progressively in authorized directories,
+not a blanket home/cloud scan. Compare real free space and app scratch/swap/I/O
+needs during the failure; large files alone do not prove they caused it.
 
-If disconnects, corruption, repeated errors or severe degradation suggest failing
-media, prioritize authorized backup/data recovery and minimize stress/writes.
-Capacity cleanup is not hardware repair. Disk Utility First Aid is a repair action,
-not merely inspection; obtain exact authorization, backup and interruption/recovery
-plan before running it, especially on a startup volume.
+Treat recurring resets, corruption or disappearing data as preservation/recovery
+signals before cleanup or intensive scans. A healthy summary does not exclude
+physical faults. First Aid/repair is a mutation, not passive inspection.
 
-For space attribution, start with the implicated container and user-selected
-folders, then progressively inspect large consumers rather than hashing or walking
-the whole home directory. Report permission, cloud-placeholder and mount exclusions;
-apparent file size, allocated bytes and APFS shared extents can differ. Candidate
-duplicate analysis belongs to [duplicate review](../review-duplicate-files/SKILL.md),
-not this capacity assessment.
-
-Prefer supported storage management and owner-selected relocation/removal over
-blind deletion. Snapshots, local Time Machine data, caches and application support
-can retain rollback, backups, licensing or state; purgeable space is OS-managed.
-Do not erase/repartition, delete snapshots or user content without specific approval.
-Use [reversible repair](../../../shared/verify-reversible-repair/SKILL.md), noting
-that deletion may have no rollback without backup.
-
-Verify usable space in the same container, the originally failing update/workload
-and backup/recovery availability. Report changed capacity, latency, collector gaps
-and unresolved media risk separately.
-
-## Sources
-
-- [Disk Utility](https://support.apple.com/guide/disk-utility/welcome/mac)
-- [Free storage on Mac](https://support.apple.com/en-us/102624)
+Do not delete snapshots, caches, cloud placeholders or unknown app data just
+because they appear reclaimable. Establish ownership, sync/retention consequences,
+recovery and authority for exact removals or repairs. Verify actual container
+headroom and the original workflow afterward; predicted logical deletion size
+need not become immediately reclaimable physical space.
