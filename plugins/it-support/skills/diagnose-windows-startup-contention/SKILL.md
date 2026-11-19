@@ -5,40 +5,22 @@ description: Diagnose slow Windows sign-in or recurring startup load and select 
 
 # Diagnose Windows startup contention
 
-Trigger: sign-in is slow or the desktop remains busy after login. Define whether
-boot, authentication, shell readiness or an app's usable state is delayed. Record
-hardware, baseline elapsed time, recent changes and whether this is first boot
-after servicing. Preserve access, work and startup configuration.
+Separate firmware/boot, authentication, profile/shell and application readiness.
+Measure the stage the user experiences; last boot time is not sign-in readiness.
+Compare a representative slow start with a useful baseline and distinguish finite
+servicing/indexing/sync from recurring unnecessary work.
 
-## Distinguish the cause
+Correlate startup apps, scheduled tasks, services and relevant boot/logon events
+with CPU, I/O and memory during the delay. Task Manager's Startup impact is a
+lead, not proof or a dependency map. Inspect the publisher, trigger and management
+owner before treating an entry as expendable. Capture a bounded WPR boot/logon
+trace only if its overhead, sensitive contents and reboot are justified.
 
-Task Manager Startup impact is a lead, not proof. Correlate process trees and CPU,
-memory and disk activity during the affected interval in Task Manager/Resource
-Monitor. Enumerate only implicated startup apps, services, scheduled tasks, shell
-extensions and app self-start mechanisms. Autoruns from Microsoft's distribution
-can expose hidden entry points; record publisher, path, trigger and owner before
-judging an entry. Security, backup and management components may be required.
+Preserve authentication, security, management, backup, networking and required
+device/app services. Prefer disabling one verified optional entry with a saved
+before-state over removing it; check demand-start functionality and dependent
+applications. A reboot or sign-out needs an access/unsaved-work plan.
 
-Finite updates, indexing, cloud sync and security scans differ from repeated
-unnecessary startup work. Prefer completion, scheduling or scope changes over
-removal. If the owner remains unclear or boot dependencies dominate, take a bounded
-Windows Performance Recorder boot trace and analyze with Windows Performance
-Analyzer under trace/privacy authority rather than disabling a list of services.
-
-## Change and verify
-
-With exact user and policy-owner approval, disable one nonessential app's supported
-autostart setting, recording how to restore it. Never disable security, updates,
-backup, accessibility or remote access to make login look fast. Preserve system
-animation/display preferences. Reboot/sign-out needs separate interruption
-approval and a reachable recovery path. Use [reversible repair](../verify-reversible-repair/SKILL.md).
-
-Compare the same boot/login conditions and user-ready milestone, not just a startup
-impact label. Confirm the app still works on demand and security/access/backup
-remain intact. Distinguish warm-cache and post-update differences from a durable
-improvement; restore the owned setting if behavior regresses.
-
-## Sources
-
-- [Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
-- [Windows Performance Toolkit](https://learn.microsoft.com/en-us/windows-hardware/test/wpt/)
+Verify the same user's readiness time and the affected app after an authorized
+change, including the next relevant startup. Report finite maintenance separately
+from an improvement that is likely to persist.

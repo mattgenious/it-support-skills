@@ -3,24 +3,22 @@ name: route-windows-support
 description: Route a Windows support task to its focused capability.
 ---
 
-# Route a Windows support task to its focused capability.
+# Windows support
 
-Select a task from its observed symptom, not a generic area label.
-- Unexpected restart: [reliability/investigate-unexpected-restart](./reliability/investigate-unexpected-restart/SKILL.md).
-- WSL nested virtualization: [virtualization/diagnose-wsl-kvm](./virtualization/diagnose-wsl-kvm/SKILL.md).
-- Disk warnings or suspected failure: [storage/assess-storage-health](./storage/assess-storage-health/SKILL.md).
-- Slow login/startup load: [performance/diagnose-startup-contention](./performance/diagnose-startup-contention/SKILL.md).
-- Workload contention: [performance/identify-resource-bottleneck](./performance/identify-resource-bottleneck/SKILL.md).
-- Protection or policy assessment: [security/assess-security-posture](./security/assess-security-posture/SKILL.md).
-- Application/service/peripheral failure: [reliability/investigate-application-device-failure](./reliability/investigate-application-device-failure/SKILL.md).
-- DNS/proxy/TLS or connectivity failure: [network path](../shared/diagnose-network-path/SKILL.md).
-- Recover files or test a backup: [backup restore](../shared/verify-backup-restore/SKILL.md).
-- Printer or stuck Windows queue: [print failure](./printing/diagnose-print-failure/SKILL.md).
-- Unclear symptom: [evidence-led-triage](../shared/evidence-led-triage/SKILL.md).
-- Uncertain prior operation: [recover-uncertain-operation](../shared/recover-uncertain-operation/SKILL.md).
-- Proposed repair: [verify-reversible-repair](../shared/verify-reversible-repair/SKILL.md).
+For an unclear symptom start with [triage](../shared/evidence-led-triage/SKILL.md).
+Load the narrow outcome:
 
-- Evidence for another technician: [collect-support-evidence](../shared/collect-support-evidence/SKILL.md).
+- Slow workload: [resource bottleneck](performance/identify-resource-bottleneck/SKILL.md);
+  slow sign-in: [startup](performance/diagnose-startup-contention/SKILL.md).
+- Recurring app/device failure: [correlate evidence](reliability/investigate-application-device-failure/SKILL.md);
+  unexpected reboot: [restart](reliability/investigate-unexpected-restart/SKILL.md).
+- [Storage health](storage/assess-storage-health/SKILL.md),
+  [security posture](security/assess-security-posture/SKILL.md),
+  [printing](printing/diagnose-print-failure/SKILL.md),
+  [WSL/KVM](virtualization/diagnose-wsl-kvm/SKILL.md).
+- [Network path](../shared/diagnose-network-path/SKILL.md),
+  [backup restore](../shared/verify-backup-restore/SKILL.md),
+  [evidence handoff](../shared/collect-support-evidence/SKILL.md).
 
-Load only the relevant owner. Area directories are organization, not executable
-skills. No capability listed here grants permission to change a machine.
+Use [reversible repair](../shared/verify-reversible-repair/SKILL.md) for changes.
+Routing grants no machine-change authority.

@@ -3,31 +3,19 @@ name: diagnose-macos-application-stall
 description: Diagnose an application stall on macOS.
 ---
 
-# Diagnose an application stall on macOS.
+# Diagnose a macOS application stall
 
-Trigger: a specific application becomes unresponsive or disrupts a workload.
+Protect unsaved work. Establish app/build, macOS/architecture, failing action,
+duration and whether other apps still respond. Separate slow progress from a
+hang, blocked UI from background work, and one app from whole-system pressure.
 
-Identify the affected app, operation, onset and reproduction. Read bounded process
-CPU, memory pressure and relevant crash/hang evidence using available native tools.
-Separate app-local stalls from system-wide resource pressure, storage waits,
-indexing and thermal constraints. Measurements need timestamps and units.
+Correlate Activity Monitor CPU/memory/disk/network with a bounded sample or
+spindump when justified; protect document paths and memory contents. High CPU can
+be progress, low CPU a wait; neither alone identifies cause. Check pressure,
+external dependencies and relevant app errors before force quitting.
 
-Prefer application-scoped reversible remedies within the user's authorization.
-Preserve unsaved work before terminating processes. Do not change privacy, login,
-system-motion or security settings to manufacture a pass. Verify responsiveness
-on the original workload; VM evidence does not qualify physical Mac behavior.
-
-Use Activity Monitor process sampling and bounded Console crash/spin reports first;
-sample/spindump or Instruments are escalation for a question basic evidence cannot
-answer. Obtain trace/privilege authority, limit overhead and sensitive paths, and
-stop the collector. A busy process need not be hung; check progress and I/O waits.
-Route system-wide [memory pressure](../diagnose-memory-pressure/SKILL.md),
-[background contention](../diagnose-background-contention/SKILL.md) or
-[storage pressure](../../storage/diagnose-storage-pressure/SKILL.md) to its owner.
-Record recurring signatures and missing evidence, not just a successful app restart.
-
-## Sources
-
-- [Activity Monitor](https://support.apple.com/guide/activity-monitor/welcome/mac)
-- [Unified logging](https://developer.apple.com/documentation/os/logging)
-- [Performance and metrics](https://developer.apple.com/documentation/xcode/performance-and-metrics)
+Prefer an app-native cancel/save or supported recovery. A force quit loses work
+and requires appropriate authority; restarting the Mac is not a substitute for
+isolating an app failure. Verify the same operation and recovery of required
+documents after a targeted change. VM evidence does not establish physical Mac
+graphics, thermal or peripheral behavior.

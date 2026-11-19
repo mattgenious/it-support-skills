@@ -3,50 +3,27 @@ name: diagnose-macos-app-permission
 description: Distinguish macOS privacy consent, app identity, sandbox, file access and managed policy failures before a targeted permission repair.
 ---
 
-# Diagnose a Mac application permission failure
+# Diagnose a macOS app permission
 
-Trigger: screen sharing, microphone/camera, Accessibility, automation or protected
-file access fails while the device/app otherwise works. Outcome: identify the
-requesting app and permission boundary, then verify only the intended capability.
+Identify the denied operation and actual requester: app, helper, terminal/host,
+account and macOS/build. Record executable/bundle/signing identity and launch
+context; consent granted to one identity does not automatically cover another.
 
-Record OS/app version, exact feature/error/time, interactive account, app location
-and bundle identity, and whether the request comes from app, helper, terminal,
-browser or remote agent. Consent to one executable/session is not automatically
-consent to another. Update, duplicate app, changed signing identity or different
-user may explain the result; none alone proves corrupt consent.
+Separate TCC/privacy consent, sandbox entitlement, filesystem ACL/ownership,
+login/session and managed policy. Inspect only relevant settings and scoped
+errors/logs; permission to diagnose does not authorize revealing private content.
+An absent prompt is not proof of denial, and a successful terminal test may use a
+different requester than the failing app.
 
-Inspect relevant Privacy & Security pane with the user and the app's input/share
-settings. Separate TCC privacy consent, sandbox entitlements, ordinary file access,
-device selection, application login/license and management restrictions. A greyed
-managed control needs its policy owner, not bypass. Use actual installed UI and
-supported app instructions where screen/system-audio categories differ by version.
-Remote/session limits may require a local test; report that verification boundary.
+Prefer the correct app's native settings/consent flow and required targeted
+relaunch. Have the user make privacy/management decisions. `tccutil reset` revokes
+consent and may require fresh interaction; it does not grant access or guarantee
+an automatically restorable before-state. Bound any reset to the actual service
+and identity with authority.
 
-If logs discriminate the failure, restrict existing Console/unified-log reads to
-app and time. Full TCC database reads expose unrelated grants and may need broader
-access themselves; do not seek Full Disk Access merely to inventory privacy.
-Prefer UI evidence and supported behavior over undocumented database schemas.
-Never edit TCC databases, disable SIP or remove profiles to force consent.
+Preserve signing, management profiles and system protections. Do not edit the
+TCC database, disable SIP, remove policy or broadly reset permissions. Verify
+the original action from the original requester/session, and distinguish a
+managed restriction from a fault that can be repaired locally.
 
-## Scoped recovery
-
-Explain capability and requester before user approval; Full Disk Access is broader
-than one folder. Preserve unrelated grants. With exact authority, reselect intended
-app/capability in supported UI and relaunch only that app after saving work. If
-stale consent is supported by evidence, installed-version-supported `tccutil reset`
-for one service and verified bundle ID is a fallback: it removes consent and
-requires a new user decision, it does not grant access. Global/service-wide resets
-are not shortcuts; managed/unsupported services may not reset. Use
-[reversible repair](../verify-reversible-repair/SKILL.md), recording
-that prior consent may not be automatically restorable.
-
-Verify original action in the same requester/account/session, intended grant only,
-and unrelated required access. Do not record private screen/audio content as proof.
-Return boundary, requesting identity, consent result, policy owner if blocked and
-remaining local-test need.
-
-## Sources
-
-- [Mac Privacy & Security](https://support.apple.com/guide/mac-help/control-what-you-share-mchl2b29231a/27/mac/27)
-- [Apple platform security](https://support.apple.com/guide/security/welcome/web)
-- [Pinned adaptation and license](SOURCE.md)
+[Adaptation provenance](SOURCE.md) and [upstream notice](LICENSE.upstream).

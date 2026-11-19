@@ -3,52 +3,30 @@ name: diagnose-wsl-kvm
 description: Diagnose missing WSL nested virtualization.
 ---
 
-# Diagnose missing WSL nested virtualization.
+# Diagnose WSL/KVM
 
-Trigger: QEMU/KVM or a nested VM stopped working inside WSL, especially after a
-host update or reboot. Working Windows Terminal or Docker containers do not prove
-nested virtualization works.
+Record Windows build/architecture, WSL package/kernel, exact distro/version,
+physical/VM host and workload requirement. Distinguish WSL 1 from 2 and guest
+virtualization capability from host hardware/firmware support.
 
-1. Read Windows/WSL/kernel versions, CPU vendor, firmware virtualization state and
-   whether a Windows hypervisor is active. Do not infer UEFI disablement from an
-   absent guest CPU flag alone.
-2. In the exact WSL distribution, check svm (AMD) or vmx (Intel), the matching
-   kvm_amd/kvm_intel module and focused kernel errors. /dev/kvm can be a stale
-   device node; its existence is not proof of usable acceleration.
-3. Test an empty QEMU instance with KVM, no disk/network and a bounded supervisor
-   timeout. Exit for unavailable acceleration isolates the prerequisite from any
-   guest OS. A paused healthy instance will require normal timeout cleanup.
-4. Verify .wslconfig against current Microsoft documentation. nestedVirtualization
-   defaults to true; making it explicit is a diagnostic hypothesis, not a cure.
-   WSL shutdown interrupts all distributions and Docker: inspect consumers first
-   and obtain approval for any actual interruption.
-5. If firmware is enabled but SVM/VMX is hidden, investigate current Windows/WSL
-   regressions. An elevated read-only HCS ProcessorCapabilities query can identify
-   ERROR_INVALID_DATA (0x8007000D); an unelevated access result is not equivalent.
+Check read-only Windows feature/hypervisor state and the distro's CPU flags,
+kernel/module diagnostics, `/dev/kvm` identity/permissions and effective KVM
+availability. A device node can be stale; CPU flags or a loaded module alone do
+not prove usable acceleration. Where justified and installed, a bounded diskless
+QEMU KVM initialization probe with networking disabled can discriminate permission
+from unavailable acceleration without booting an untrusted guest; stop the owned
+probe on timeout.
 
-October 2026 maintainer reports describe AMD nested virtualization lost after
-Windows servicing. An independently tested diskless KVM failure plus missing SVM
-and elevated HCS 0x8007000D matches that signature; it does not prove every affected
-update identity or establish a universal fix. Recheck current vendor status.
+Inspect the effective WSL configuration before editing. `nestedVirtualization`
+defaults to true on supported configurations; writing it again is not a verified
+repair. Distinguish elevated HCS `ProcessorCapabilities` query error `0x8007000D`
+from an access-denied result. Preserve exact errors/builds; these observations do
+not by themselves identify a firmware or security-policy cause.
 
-Verified diagnostic boundary: an empty, diskless QEMU/KVM probe failed while
-firmware virtualization and the Windows hypervisor were active; elevated HCS
-Basic succeeded but ProcessorCapabilities returned 0x8007000D. WSL-only restart,
-explicit nestedVirtualization=true and an authorized Host Compute restart did not
-restore SVM/KVM. The configuration probe was reverted, Docker restored, and the
-original guest disks were untouched. These are negative diagnostic results, not
-a verified repair. System-file verification was clean and no newer Windows Update
-was offered at the time of investigation. Do not repeat these checks as cures
-without new evidence. Different signed system-binary versions alone are not proof
-of corruption.
+A WSL shutdown/restart interrupts all distros and consumers such as Docker;
+establish authority and save work/access first. Do not disable VBS/security,
+replace system binaries or downgrade drivers as an automatic cure. Make a
+supported targeted change only when evidence and recovery justify it, then repeat
+the KVM/workload probe. Unchanged failure remains unresolved, not a claimed fix.
 
-Sources:
-- https://learn.microsoft.com/en-us/windows/wsl/wsl-config
-- https://github.com/microsoft/WSL/issues/41917
-
-Do not disable VBS, edit hypervisor binaries, swap system DLLs, downgrade WSL or
-uninstall a security update as an automatic workaround. Update rollback has
-reported boot-recovery risks and requires exact approval, servicing compatibility
-and a rollback/recovery plan. An unresolved upstream prerequisite is an honest
-blocker, not permission to weaken the machine. After repair, prove guest flags,
-usable KVM and the original workload. Label an unverified workaround as such.
+[WSL configuration defaults](https://learn.microsoft.com/en-us/windows/wsl/wsl-config).

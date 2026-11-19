@@ -3,31 +3,22 @@ name: investigate-unexpected-restart
 description: Investigate an unexpected Windows restart.
 ---
 
-# Investigate an unexpected Windows restart.
+# Investigate an unexpected Windows restart
 
-Trigger: an unexpected reboot, bugcheck or shutdown interrupted work.
+Establish when the machine stopped/responded/restarted, timezone, user impact
+and whether this was planned servicing, a bugcheck, power loss, hang or reset.
+Preserve System/Application events, dump files and relevant firmware/UPS evidence.
 
-Read LastBootUpTime and bounded Get-WinEvent records for the incident window.
-Correlate Kernel-Power, unexpected-shutdown, bugcheck and Windows Error Reporting
-signals with relevant update, driver or storage observations. Normalize timestamps
-to UTC. A shutdown record is evidence of interruption, not its cause.
+Build a short chronology around the earliest anomaly, shutdown initiation,
+bugcheck/dump and subsequent boot. Kernel-Power or an unexpected-shutdown event
+records an interruption; it does not identify its cause. Missing logs or dumps
+are evidence gaps, not proof of power loss or hardware failure.
 
-Separate crash, planned servicing restart, power loss and incomplete logging.
-Seek repeated signatures and a plausible mechanism before assigning causation.
-Preserve logs and dumps; do not clear history or disable error reporting/dump
-collection to make results look clean. Include onset/frequency, recovery and recent
-hardware/power/firmware/security changes. Group repeated bugcheck/failure signatures
-and separate precursor, primary fault and recovery noise. Collection failures and
-missing event windows are unknowns, not proof of stability.
+Match exact OS/build, driver/firmware and recurring failure signature; correlate
+changes without treating coincidence as causation. Protect crash memory and
+personal paths. Do not provoke another crash, clear logs or replace several
+drivers to manufacture a clean run.
 
-Route disk/controller concerns to [storage health](../../storage/assess-storage-health/SKILL.md),
-protection/policy concerns to [security assessment](../../security/assess-security-posture/SKILL.md).
-Propose one discriminating check or [authorized reversible repair](../../../shared/verify-reversible-repair/SKILL.md),
-with an explicit reproduction/recurrence window. Reboots, rollback, uninstall or
-firmware/driver changes require exact approval and recovery. Do not reinstall
-unrelated drivers or use cleaners. State when the cause remains unproven.
-
-## Sources
-
-- [Get-WinEvent](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent)
-- Original maintainer-owned reliability guidance, adapted with authorization.
+Choose a supported repair or known-good rollback within authority, preserving
+access and recovery. Verify the original workload and recurrence conditions;
+one successful boot establishes recovery, not a durable root-cause fix.
